@@ -54,9 +54,6 @@
   "cSpell.words": ["Hono", "openapi"],
   "cSpell.ignorePaths": ["prisma"],
 
-  "files.exclude": {
-    "**/node_modules": true
-  },
   "files.watcherExclude": {
     "**/node_modules/**": true,
     "**/prisma/x3.prisma": true

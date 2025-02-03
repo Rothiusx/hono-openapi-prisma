@@ -35,6 +35,4 @@ test.db
 dist
 
 # prisma
-prisma/client/
-prisma/dbml/
-prisma/schemas/
+prisma/generate/

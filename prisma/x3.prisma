@@ -1,7 +1,8 @@
 generator client {
   provider = "prisma-client-js"
-  output = "@prisma/client/x3"
+  output   = "./generate/client/x3"
 }
+
 
 datasource db {
   provider = "sqlserver"

@@ -1,21 +1,22 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "@prisma/client/mes"
+  output   = "./generate/client/mes"
 }
 
 generator dbml {
   provider = "prisma-dbml-generator"
-  output   = "@prisma/dbml"
+  output   = "./generate/dbml"
 }
 
 generator zod {
-  provider                         = "zod-prisma-types"
-  output                           = "@prisma/schemas"
-  prismaClientPath                 = "@prisma/client/mes"
-  useMultipleFiles                 = false
-  writeBarrelFiles                 = false
-  createInputTypes                 = false
-  createModelTypes                 = true
+  provider         = "zod-prisma-types"
+  output           = "./generate/schemas"
+  prismaClientPath = "../../generate/client/mes"
+  useMultipleFiles = false
+  writeBarrelFiles = false
+  createInputTypes = false
+  createModelTypes = true
+
   addInputTypeValidation           = false
   addIncludeType                   = false
   addSelectType                    = false
@@ -68,7 +69,6 @@ model build_instruction {
   bi_type     BI_TYPE      @default(B)
   bi_text     String       @db.MediumText
   work_center work_center? @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_build_instruction_work_center1")
-
 
   @@index([id_wc], map: "fk_build_instruction_id_wc_idx")
 }

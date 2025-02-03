@@ -14,13 +14,10 @@
     "types": [
       "node"
     ],
-
     "strict": true,
+    "strictNullChecks": true,
     "outDir": "./dist",
     "skipLibCheck": true
   },
-  "tsc-alias": {
-    "resolveFullPaths": true
-  },
-  "exclude": ["node_modules", "dist", "prisma"]
+  "exclude": ["node_modules", "dist"]
 }
