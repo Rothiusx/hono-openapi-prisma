@@ -4,7 +4,7 @@ generator client {
 
 generator dbml {
   provider = "prisma-dbml-generator"
-  output = "./dbml"
+  output   = "./dbml"
 }
 
 generator zod {
@@ -31,10 +31,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum WorkCenter {
-  CZ_CNC
-  CZ_PRODP
-  CZ_PRODL
+enum BI_TYPE {
+  B
+  I
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -64,9 +63,10 @@ model build_instruction {
   id_bi       Int          @id @default(autoincrement()) @db.UnsignedInt
   id_wc       String?      @db.VarChar(16)
   bi_pn       String?      @db.VarChar(45)
-  bi_type     String       @default("B") @db.Char(1)
+  bi_type     BI_TYPE      @default(B)
   bi_text     String       @db.MediumText
   work_center work_center? @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_build_instruction_work_center1")
+
 
   @@index([id_wc], map: "fk_build_instruction_id_wc_idx")
 }

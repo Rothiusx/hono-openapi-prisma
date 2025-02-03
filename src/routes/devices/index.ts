@@ -1,12 +1,11 @@
-import db from '@/db'
-import { createRouter } from '@/lib/create-app'
+import { createRouter } from '@/app/create-app'
 
 import * as handlers from './handlers'
 import * as routes from './routes'
 
 const router = createRouter()
   .openapi(routes.list, async (c) => {
-    const devices = await db.device.findMany()
+    const devices = await c.var.db.device.findMany()
     return c.json(devices)
   })
   .openapi(routes.create, handlers.create)

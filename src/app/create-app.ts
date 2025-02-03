@@ -2,12 +2,11 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import { notFound, onError, serveEmojiFavicon } from 'stoker/middlewares'
 import { defaultHook } from 'stoker/openapi'
 
-import type { AppContext, AppOpenAPI } from '@/types/app'
-
 import { pinoLogger } from '@/middlewares/pino-logger'
+import { prismaMiddleware } from '@/middlewares/prisma'
 
 export function createRouter() {
-  return new OpenAPIHono<AppContext>({
+  return new OpenAPIHono({
     strict: false,
     defaultHook,
   })
@@ -15,7 +14,8 @@ export function createRouter() {
 
 export default function createApp() {
   const app = createRouter()
-  app.use(serveEmojiFavicon('📝'))
+  app.use(serveEmojiFavicon('🚀'))
+  app.use(prismaMiddleware())
   app.use(pinoLogger())
 
   app.notFound(notFound)
@@ -23,6 +23,6 @@ export default function createApp() {
   return app
 }
 
-export function createTestApp<R extends AppOpenAPI>(router: R) {
+export function createTestApp(router: OpenAPIHono) {
   return createApp().route('/', router)
 }

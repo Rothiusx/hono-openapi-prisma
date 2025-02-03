@@ -27,7 +27,7 @@ Table build_instruction {
   id_bi Int [pk, increment]
   id_wc String
   bi_pn String
-  bi_type String [not null, default: 'B']
+  bi_type BI_TYPE [not null, default: 'B']
   bi_text String [not null]
   work_center work_center
 }
@@ -247,10 +247,9 @@ Table work_order {
   operation operation [not null]
 }
 
-Enum WorkCenter {
-  CZ_CNC
-  CZ_PRODP
-  CZ_PRODL
+Enum BI_TYPE {
+  B
+  I
 }
 
 Ref: batch.id_wc_last > work_center.id_wc [delete: No Action]

@@ -58,7 +58,7 @@ export const NullsOrderSchema = z.enum(['first', 'last'])
 
 export const batchOrderByRelevanceFieldEnumSchema = z.enum(['batch_key', 'id_wc_last', 'batch_product_itmref', 'batch_comment', 'batch_lot'])
 
-export const build_instructionOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'bi_pn', 'bi_type', 'bi_text'])
+export const build_instructionOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'bi_pn', 'bi_text'])
 
 export const concession_enumOrderByRelevanceFieldEnumSchema = z.enum(['concession_name', 'concession_desc'])
 
@@ -88,9 +88,9 @@ export const work_center_stayOrderByRelevanceFieldEnumSchema = z.enum(['id_wc'])
 
 export const work_orderOrderByRelevanceFieldEnumSchema = z.enum(['wo_number', 'wo_startdate', 'wo_enddate', 'wo_product', 'wo_comment', 'wo_note_short', 'wo_note_long', 'wo_customer'])
 
-export const WorkCenterSchema = z.enum(['CZ_CNC', 'CZ_PRODP', 'CZ_PRODL'])
+export const BI_TYPESchema = z.enum(['B', 'I'])
 
-export type WorkCenterType = `${z.infer<typeof WorkCenterSchema>}`
+export type BI_TYPEType = `${z.infer<typeof BI_TYPESchema>}`
 
 /////////////////////////////////////////
 // MODELS
@@ -125,10 +125,10 @@ export type batch = z.infer<typeof batchSchema>
 /////////////////////////////////////////
 
 export const build_instructionSchema = z.object({
+  bi_type: BI_TYPESchema,
   id_bi: z.number(),
   id_wc: z.string().nullable(),
   bi_pn: z.string().nullable(),
-  bi_type: z.string(),
   bi_text: z.string(),
 })
 

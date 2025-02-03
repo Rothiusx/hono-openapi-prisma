@@ -1,5 +1,5 @@
-import createApp from '@/lib/create-app'
-import createOpenAPI from '@/lib/open-api'
+import createApp from '@/app/create-app'
+import createOpenAPI from '@/app/open-api'
 import indexRouter from '@/routes'
 import devicesRouter from '@/routes/devices'
 

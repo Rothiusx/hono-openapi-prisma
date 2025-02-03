@@ -1,10 +1,10 @@
-import { apiReference } from '@scalar/hono-api-reference'
+import type { OpenAPIHono } from '@hono/zod-openapi'
 
-import type { AppOpenAPI } from '@/types/app'
+import { apiReference } from '@scalar/hono-api-reference'
 
 import packageJSON from '../../package.json' with { type: 'json' }
 
-export default function createOpenAPI(app: AppOpenAPI) {
+export default function createOpenAPI(app: OpenAPIHono) {
   app.doc('/doc', {
     openapi: '3.0.0',
     info: {

@@ -1,3 +1,10 @@
-import db from '@/db'
+import type { MiddlewareHandler } from 'hono'
 
-export const prismaMiddleware = () => db
+import prisma from '@/db'
+
+export function prismaMiddleware(): MiddlewareHandler {
+  return async (c, next) => {
+    c.set('db', prisma)
+    await next()
+  }
+}

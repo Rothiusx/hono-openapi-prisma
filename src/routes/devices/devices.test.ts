@@ -8,9 +8,9 @@ import { ZodIssueCode } from 'zod'
 
 import type { device } from 'prisma/schemas'
 
+import createApp from '@/app/create-app'
 import env from '@/env'
 import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from '@/lib/constants'
-import createApp from '@/lib/create-app'
 
 import router from '.'
 
