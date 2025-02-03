@@ -1,15 +1,17 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "@prisma/client/mes"
 }
 
 generator dbml {
   provider = "prisma-dbml-generator"
-  output   = "./dbml"
+  output   = "@prisma/dbml"
 }
 
 generator zod {
   provider                         = "zod-prisma-types"
-  output                           = "./schemas"
+  output                           = "@prisma/schemas"
+  prismaClientPath                 = "@prisma/client/mes"
   useMultipleFiles                 = false
   writeBarrelFiles                 = false
   createInputTypes                 = false

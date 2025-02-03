@@ -9,10 +9,12 @@
     "lint": "tsc && eslint .",
     "lint:fix": "npm run lint --fix",
     "test": "cross-env NODE_ENV=test vitest",
-    "build": "tsc && tsc-alias",
+    "build": "npm run db:generate-all && tsc && tsc-alias",
     "db:studio": "prisma studio",
-    "db:pull": "prisma db pull",
-    "db:generate": "prisma generate"
+    "db:pull": "prisma db pull --schema=./prisma/schema.prisma",
+    "db:pull-x3": "prisma db pull --schema=./prisma/x3.prisma",
+    "db:generate": "prisma generate",
+    "db:generate-all": "npm run db:generate && prisma generate --schema=./prisma/x3.prisma"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.7",

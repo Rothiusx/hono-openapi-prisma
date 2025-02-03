@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "@prisma/client/x3"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("X3_URL")
+}
+
+model ACCCOD {
+  UPDTICK_0   Int
+  CODACC_0    String   @unique(map: "ACCCOD_ACS0", clustered: true) @db.NVarChar(10)
+  INTACC_0    String   @db.NVarChar(30)
+  CREUSR_0    String   @db.NVarChar(5)
+  UPDUSR_0    String   @db.NVarChar(5)
+  CREDAT_0    DateTime @db.DateTime
+  UPDDAT_0    DateTime @db.DateTime
+  CREDATTIM_0 DateTime @db.DateTime
+  UPDDATTIM_0 DateTime @db.DateTime
+  AUUID_0     Bytes    @db.Binary(16)
+  ROWID       Decimal  @id(clustered: false, map: "ACCCOD_ROWID") @db.Decimal(38, 0)
+}

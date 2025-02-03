@@ -1,10 +1,11 @@
 import type { MiddlewareHandler } from 'hono'
 
-import prisma from '@/db'
+import { mes, x3 } from '@/db'
 
 export function prismaMiddleware(): MiddlewareHandler {
   return async (c, next) => {
-    c.set('db', prisma)
+    c.set('db', mes)
+    c.set('x3', x3)
     await next()
   }
 }

@@ -1,94 +1,94 @@
-import type { Prisma } from '@prisma/client'
-
-import { z } from 'zod'
+import { z } from 'zod';
+import type { Prisma } from '@prisma/client/mes';
 
 /////////////////////////////////////////
 // HELPER FUNCTIONS
 /////////////////////////////////////////
 
+
 /////////////////////////////////////////
 // ENUMS
 /////////////////////////////////////////
 
-export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted', 'ReadCommitted', 'RepeatableRead', 'Serializable'])
+export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const BatchScalarFieldEnumSchema = z.enum(['id_batch', 'id_order', 'batch_key', 'batch_size', 'id_wc_last', 'batch_wc_enter', 'batch_product_itmref', 'batch_product_qty', 'batch_created', 'batch_comment', 'batch_state_num', 'batch_lot'])
+export const BatchScalarFieldEnumSchema = z.enum(['id_batch','id_order','batch_key','batch_size','id_wc_last','batch_wc_enter','batch_product_itmref','batch_product_qty','batch_created','batch_comment','batch_state_num','batch_lot']);
 
-export const Build_instructionScalarFieldEnumSchema = z.enum(['id_bi', 'id_wc', 'bi_pn', 'bi_type', 'bi_text'])
+export const Build_instructionScalarFieldEnumSchema = z.enum(['id_bi','id_wc','bi_pn','bi_type','bi_text']);
 
-export const Concession_assignScalarFieldEnumSchema = z.enum(['id_concession_assign', 'id_concession', 'id_batch', 'id_user', 'concession_date'])
+export const Concession_assignScalarFieldEnumSchema = z.enum(['id_concession_assign','id_concession','id_batch','id_user','concession_date']);
 
-export const Concession_enumScalarFieldEnumSchema = z.enum(['id_concession', 'concession_name', 'concession_desc', 'concession_created', 'concession_closed', 'concession_disabled'])
+export const Concession_enumScalarFieldEnumSchema = z.enum(['id_concession','concession_name','concession_desc','concession_created','concession_closed','concession_disabled']);
 
-export const Custom_fieldScalarFieldEnumSchema = z.enum(['id_field', 'id_wc', 'field_name', 'field_desc', 'field_datatype', 'field_order'])
+export const Custom_fieldScalarFieldEnumSchema = z.enum(['id_field','id_wc','field_name','field_desc','field_datatype','field_order']);
 
-export const Custom_field_instanceScalarFieldEnumSchema = z.enum(['id_field_instance', 'id_field', 'id_order', 'field_value'])
+export const Custom_field_instanceScalarFieldEnumSchema = z.enum(['id_field_instance','id_field','id_order','field_value']);
 
-export const DeviceScalarFieldEnumSchema = z.enum(['id_device', 'id_wc', 'device_key', 'device_name', 'device_desc'])
+export const DeviceScalarFieldEnumSchema = z.enum(['id_device','id_wc','device_key','device_name','device_desc']);
 
-export const Entry_assignScalarFieldEnumSchema = z.enum(['id_entry_assign', 'id_wc', 'id_entry', 'entry_assign_order', 'entry_assign_mandatory'])
+export const Entry_assignScalarFieldEnumSchema = z.enum(['id_entry_assign','id_wc','id_entry','entry_assign_order','entry_assign_mandatory']);
 
-export const Entry_enumScalarFieldEnumSchema = z.enum(['id_entry', 'entry_name', 'entry_key', 'entry_desc', 'entry_is_error', 'entry_datatype', 'entry_color', 'entry_icon'])
+export const Entry_enumScalarFieldEnumSchema = z.enum(['id_entry','entry_name','entry_key','entry_desc','entry_is_error','entry_datatype','entry_color','entry_icon']);
 
-export const Entry_instanceScalarFieldEnumSchema = z.enum(['id_entry_inst', 'id_entry_assign', 'id_wc_stay', 'id_user', 'entry_value', 'entry_modified', 'entry_inactive', 'entry_finalized'])
+export const Entry_instanceScalarFieldEnumSchema = z.enum(['id_entry_inst','id_entry_assign','id_wc_stay','id_user','entry_value','entry_modified','entry_inactive','entry_finalized']);
 
-export const OperationScalarFieldEnumSchema = z.enum(['id_operation', 'id_wc', 'id_order', 'oper_time', 'oper_name', 'oper_seq'])
+export const OperationScalarFieldEnumSchema = z.enum(['id_operation','id_wc','id_order','oper_time','oper_name','oper_seq']);
 
-export const Permission_assignScalarFieldEnumSchema = z.enum(['id_permission_assign', 'id_role', 'id_permission'])
+export const Permission_assignScalarFieldEnumSchema = z.enum(['id_permission_assign','id_role','id_permission']);
 
-export const Role_assignScalarFieldEnumSchema = z.enum(['id_role_assign', 'id_user', 'id_role'])
+export const Role_assignScalarFieldEnumSchema = z.enum(['id_role_assign','id_user','id_role']);
 
-export const Time_trackerScalarFieldEnumSchema = z.enum(['id_time', 'id_wc_stay', 'id_user', 'time_start', 'time_stop', 'time_interval', 'time_type'])
+export const Time_trackerScalarFieldEnumSchema = z.enum(['id_time','id_wc_stay','id_user','time_start','time_stop','time_interval','time_type']);
 
-export const User_permissionScalarFieldEnumSchema = z.enum(['id_permission', 'permission_name', 'permission_desc'])
+export const User_permissionScalarFieldEnumSchema = z.enum(['id_permission','permission_name','permission_desc']);
 
-export const User_roleScalarFieldEnumSchema = z.enum(['id_role', 'role_name', 'role_desc'])
+export const User_roleScalarFieldEnumSchema = z.enum(['id_role','role_name','role_desc']);
 
-export const User_userScalarFieldEnumSchema = z.enum(['id_user', 'user_firstname', 'user_lastname', 'user_login', 'user_ldap', 'user_pass', 'user_operator', 'user_inactive', 'user_token'])
+export const User_userScalarFieldEnumSchema = z.enum(['id_user','user_firstname','user_lastname','user_login','user_ldap','user_pass','user_operator','user_inactive','user_token']);
 
-export const Work_centerScalarFieldEnumSchema = z.enum(['id_wc', 'wc_desc', 'wc_week_hours', 'wc_idle_timeout'])
+export const Work_centerScalarFieldEnumSchema = z.enum(['id_wc','wc_desc','wc_week_hours','wc_idle_timeout']);
 
-export const Work_center_stayScalarFieldEnumSchema = z.enum(['id_wc_stay', 'id_wc', 'id_batch', 'id_user', 'wc_start_date', 'wc_end_date', 'wc_stay_order', 'wc_stay_last_stay_on_wc', 'wc_stay_finish_qty'])
+export const Work_center_stayScalarFieldEnumSchema = z.enum(['id_wc_stay','id_wc','id_batch','id_user','wc_start_date','wc_end_date','wc_stay_order','wc_stay_last_stay_on_wc','wc_stay_finish_qty']);
 
-export const Work_orderScalarFieldEnumSchema = z.enum(['id_order', 'wo_number', 'wo_startdate', 'wo_enddate', 'wo_product', 'wo_quantity', 'wo_status', 'wo_x3_last_update', 'wo_comment', 'wo_note_short', 'wo_note_long', 'wo_hold', 'wo_keep_ope_seq', 'wo_customer'])
+export const Work_orderScalarFieldEnumSchema = z.enum(['id_order','wo_number','wo_startdate','wo_enddate','wo_product','wo_quantity','wo_status','wo_x3_last_update','wo_comment','wo_note_short','wo_note_long','wo_hold','wo_keep_ope_seq','wo_customer']);
 
-export const SortOrderSchema = z.enum(['asc', 'desc'])
+export const SortOrderSchema = z.enum(['asc','desc']);
 
-export const NullsOrderSchema = z.enum(['first', 'last'])
+export const NullsOrderSchema = z.enum(['first','last']);
 
-export const batchOrderByRelevanceFieldEnumSchema = z.enum(['batch_key', 'id_wc_last', 'batch_product_itmref', 'batch_comment', 'batch_lot'])
+export const batchOrderByRelevanceFieldEnumSchema = z.enum(['batch_key','id_wc_last','batch_product_itmref','batch_comment','batch_lot']);
 
-export const build_instructionOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'bi_pn', 'bi_text'])
+export const build_instructionOrderByRelevanceFieldEnumSchema = z.enum(['id_wc','bi_pn','bi_text']);
 
-export const concession_enumOrderByRelevanceFieldEnumSchema = z.enum(['concession_name', 'concession_desc'])
+export const concession_enumOrderByRelevanceFieldEnumSchema = z.enum(['concession_name','concession_desc']);
 
-export const custom_fieldOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'field_name', 'field_desc', 'field_datatype'])
+export const custom_fieldOrderByRelevanceFieldEnumSchema = z.enum(['id_wc','field_name','field_desc','field_datatype']);
 
-export const custom_field_instanceOrderByRelevanceFieldEnumSchema = z.enum(['field_value'])
+export const custom_field_instanceOrderByRelevanceFieldEnumSchema = z.enum(['field_value']);
 
-export const deviceOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'device_key', 'device_name', 'device_desc'])
+export const deviceOrderByRelevanceFieldEnumSchema = z.enum(['id_wc','device_key','device_name','device_desc']);
 
-export const entry_assignOrderByRelevanceFieldEnumSchema = z.enum(['id_wc'])
+export const entry_assignOrderByRelevanceFieldEnumSchema = z.enum(['id_wc']);
 
-export const entry_enumOrderByRelevanceFieldEnumSchema = z.enum(['entry_name', 'entry_key', 'entry_desc', 'entry_datatype', 'entry_color', 'entry_icon'])
+export const entry_enumOrderByRelevanceFieldEnumSchema = z.enum(['entry_name','entry_key','entry_desc','entry_datatype','entry_color','entry_icon']);
 
-export const entry_instanceOrderByRelevanceFieldEnumSchema = z.enum(['entry_value'])
+export const entry_instanceOrderByRelevanceFieldEnumSchema = z.enum(['entry_value']);
 
-export const operationOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'oper_name'])
+export const operationOrderByRelevanceFieldEnumSchema = z.enum(['id_wc','oper_name']);
 
-export const user_permissionOrderByRelevanceFieldEnumSchema = z.enum(['permission_name', 'permission_desc'])
+export const user_permissionOrderByRelevanceFieldEnumSchema = z.enum(['permission_name','permission_desc']);
 
-export const user_roleOrderByRelevanceFieldEnumSchema = z.enum(['role_name', 'role_desc'])
+export const user_roleOrderByRelevanceFieldEnumSchema = z.enum(['role_name','role_desc']);
 
-export const user_userOrderByRelevanceFieldEnumSchema = z.enum(['user_firstname', 'user_lastname', 'user_login', 'user_pass', 'user_operator', 'user_token'])
+export const user_userOrderByRelevanceFieldEnumSchema = z.enum(['user_firstname','user_lastname','user_login','user_pass','user_operator','user_token']);
 
-export const work_centerOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'wc_desc'])
+export const work_centerOrderByRelevanceFieldEnumSchema = z.enum(['id_wc','wc_desc']);
 
-export const work_center_stayOrderByRelevanceFieldEnumSchema = z.enum(['id_wc'])
+export const work_center_stayOrderByRelevanceFieldEnumSchema = z.enum(['id_wc']);
 
-export const work_orderOrderByRelevanceFieldEnumSchema = z.enum(['wo_number', 'wo_startdate', 'wo_enddate', 'wo_product', 'wo_comment', 'wo_note_short', 'wo_note_long', 'wo_customer'])
+export const work_orderOrderByRelevanceFieldEnumSchema = z.enum(['wo_number','wo_startdate','wo_enddate','wo_product','wo_comment','wo_note_short','wo_note_long','wo_customer']);
 
-export const BI_TYPESchema = z.enum(['B', 'I'])
+export const BI_TYPESchema = z.enum(['B','I']);
 
 export type BI_TYPEType = `${z.infer<typeof BI_TYPESchema>}`
 

@@ -9,7 +9,7 @@ import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from '@/lib/constants'
 
 export const list: RouteHandler<ListRoute> = async (c) => {
   const devices = await c.var.db.device.findMany()
-  return c.json(devices)
+  return c.json(devices, HttpStatusCodes.OK)
 }
 
 export const create: RouteHandler<CreateRoute> = async (c) => {
@@ -33,6 +33,7 @@ export const create: RouteHandler<CreateRoute> = async (c) => {
 
 export const getOne: RouteHandler<GetOneRoute> = async (c) => {
   const { id } = c.req.valid('param')
+
   const device = await c.var.db.device.findFirst({
     where: {
       id_device: id,

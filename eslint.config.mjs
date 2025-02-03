@@ -9,7 +9,7 @@ export default antfu({
     semi: false,
     quotes: 'single',
   },
-  ignores: ['node_modules', 'dist', '**/migrations/*'],
+  ignores: ['node_modules', 'dist', '**/migrations/*', 'prisma'],
 }, {
   rules: {
     'no-console': ['warn'],
