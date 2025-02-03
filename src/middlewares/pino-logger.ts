@@ -7,7 +7,7 @@ import env from '@/env'
 export function pinoLogger() {
   return logger({
     pino: pino({
-      level: env.LOG_LEVEL || 'info',
+      level: env.LOG_LEVEL ?? 'info',
     }, env.NODE_ENV === 'production' ? undefined : pretty()),
     http: {
       reqId: () => crypto.randomUUID(),

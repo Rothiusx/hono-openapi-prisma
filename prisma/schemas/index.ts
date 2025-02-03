@@ -1,3 +1,5 @@
+import type { Prisma } from '@prisma/client'
+
 import { z } from 'zod'
 
 /////////////////////////////////////////
@@ -85,6 +87,11 @@ export const work_centerOrderByRelevanceFieldEnumSchema = z.enum(['id_wc', 'wc_d
 export const work_center_stayOrderByRelevanceFieldEnumSchema = z.enum(['id_wc'])
 
 export const work_orderOrderByRelevanceFieldEnumSchema = z.enum(['wo_number', 'wo_startdate', 'wo_enddate', 'wo_product', 'wo_comment', 'wo_note_short', 'wo_note_long', 'wo_customer'])
+
+export const WorkCenterSchema = z.enum(['CZ_CNC', 'CZ_PRODP', 'CZ_PRODL'])
+
+export type WorkCenterType = `${z.infer<typeof WorkCenterSchema>}`
+
 /////////////////////////////////////////
 // MODELS
 /////////////////////////////////////////

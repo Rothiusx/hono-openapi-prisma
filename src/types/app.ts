@@ -12,13 +12,3 @@ export interface AppContext {
 export type AppOpenAPI = OpenAPIHono<AppContext>
 
 export type AppRouteHandler<R extends RouteConfig> = RouteHandler<R, AppContext>
-
-interface B {
-  b: string
-  f: string
-  c: string
-}
-
-interface A {
-  a: string
-}
