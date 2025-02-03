@@ -1,6 +1,5 @@
 import type { OpenAPIHono } from '@hono/zod-openapi'
 
-import { swaggerUI } from '@hono/swagger-ui'
 import { apiReference } from '@scalar/hono-api-reference'
 
 import packageJSON from '../../package.json' with { type: 'json' }
@@ -13,12 +12,6 @@ export default function createOpenAPI(app: OpenAPIHono) {
       title: 'Devices API',
     },
   })
-  app.get(
-    '/ui',
-    swaggerUI({
-      url: '/doc',
-    }),
-  )
   app.get(
     '/reference',
     apiReference({

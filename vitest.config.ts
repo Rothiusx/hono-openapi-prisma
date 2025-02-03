@@ -5,6 +5,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@prisma': path.resolve(__dirname, './prisma'),
     },
   },
 })

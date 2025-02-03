@@ -1,9 +1,8 @@
 /* eslint-disable ts/ban-ts-comment */
-import { PrismaClient } from '@prisma/client'
 import { testClient } from 'hono/testing'
 import * as HttpStatusCodes from 'stoker/http-status-codes'
 import * as HttpStatusPhrases from 'stoker/http-status-phrases'
-import { afterAll, beforeAll, describe, expect, expectTypeOf, it } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 import { ZodIssueCode } from 'zod'
 
 import type { device } from 'prisma/schemas'
@@ -11,30 +10,19 @@ import type { device } from 'prisma/schemas'
 import createApp from '@/app/create-app'
 import env from '@/env'
 import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from '@/lib/constants'
-
-import router from '.'
+import router from '@/routes/devices'
 
 if (env.NODE_ENV !== 'test') {
   throw new Error('NODE_ENV must be \'test\'')
 }
 
-const prisma = new PrismaClient()
 const client = testClient(createApp().route('/', router))
 
 describe('devices routes', () => {
-  beforeAll(async () => {
-    // await prisma.device.deleteMany()
-  })
-
-  afterAll(async () => {
-    // await prisma.device.deleteMany()
-    await prisma.$disconnect()
-  })
-
   const device = {
-    id_device: 10,
-    id_wc: 'CZ-PRODP',
-    device_key: '100',
+    id_device: 100,
+    id_wc: 'CZ-CNC',
+    device_key: 'cnc_01',
     device_name: '',
     device_desc: '',
   } as const satisfies device
