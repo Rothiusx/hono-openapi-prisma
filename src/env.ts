@@ -17,7 +17,7 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']),
   DATABASE_URL: z.string().url(),
   DATABASE_AUTH_TOKEN: z.string().optional(),
-  X3_URL: z.string(),
+  X3_URL: z.string().optional(),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === 'production' && !input.DATABASE_AUTH_TOKEN) {
     ctx.addIssue({

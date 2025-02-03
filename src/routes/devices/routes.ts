@@ -9,9 +9,14 @@ import { deviceSchema } from 'prisma/schemas'
 const tags = ['Devices']
 
 const deviceParamsSchema = z.object({
-  id: z.coerce.number()
+  id: z.coerce
+    .number()
     .min(1, { message: 'Device ID must be greater than 0' })
-    .max(9999, { message: 'Device ID must be less than 10000' }),
+    .max(9999, { message: 'Device ID must be less than 10000' })
+    .openapi({
+      examples: [20, 30, 40],
+      description: 'Device ID to search for',
+    }),
 })
 
 export const list = createRoute({
@@ -55,6 +60,7 @@ export const getOne = createRoute({
   request: {
     params: deviceParamsSchema,
   },
+
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       deviceSchema,
