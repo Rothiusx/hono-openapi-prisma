@@ -5,7 +5,7 @@ import * as HttpStatusPhrases from 'stoker/http-status-phrases'
 import { describe, expect, expectTypeOf, it } from 'vitest'
 import { ZodIssueCode } from 'zod'
 
-import type { device } from '@prisma/generate/schemas'
+import type { device } from '@prisma/generate/schema/mes'
 
 import createApp from '@/app/create-app'
 import env from '@/env'

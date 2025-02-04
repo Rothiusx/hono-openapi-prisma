@@ -3,40 +3,29 @@ generator client {
   output   = "./generate/client/mes"
 }
 
-generator dbml {
-  provider = "prisma-dbml-generator"
-  output   = "./generate/dbml"
-}
-
 generator zod {
-  provider         = "zod-prisma-types"
-  output           = "./generate/schemas"
-  prismaClientPath = "../../generate/client/mes"
-  useMultipleFiles = false
-  writeBarrelFiles = false
-  createInputTypes = false
-  createModelTypes = true
-
-  addInputTypeValidation           = false
-  addIncludeType                   = false
-  addSelectType                    = false
-  validateWhereUniqueInput         = false
-  createOptionalDefaultValuesTypes = false
-  createRelationValuesTypes        = false
-  createPartialTypes               = false
-  useDefaultValidators             = false
-  coerceDate                       = true
-  writeNullishInModelTypes         = false
+  provider                         = "zod-prisma-types"
+  output                           = "./generate/schema/mes"
+  addIncludeType                   = "false"
+  addInputTypeValidation           = "true"
+  addSelectType                    = "false"
+  coerceDate                       = "true"
+  createInputTypes                 = "false"
+  createModelTypes                 = "true"
+  createOptionalDefaultValuesTypes = "false"
+  createPartialTypes               = "false"
+  createRelationValuesTypes        = "false"
+  prismaClientPath                 = "../../client/mes"
+  useDefaultValidators             = "true"
+  useMultipleFiles                 = "false"
+  validateWhereUniqueInput         = "false"
+  writeBarrelFiles                 = "true"
+  writeNullishInModelTypes         = "false"
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-}
-
-enum BI_TYPE {
-  B
-  I
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -66,7 +55,7 @@ model build_instruction {
   id_bi       Int          @id @default(autoincrement()) @db.UnsignedInt
   id_wc       String?      @db.VarChar(16)
   bi_pn       String?      @db.VarChar(45)
-  bi_type     BI_TYPE      @default(B)
+  bi_type     String       @default("B") @db.Char(1)
   bi_text     String       @db.MediumText
   work_center work_center? @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_build_instruction_work_center1")
 

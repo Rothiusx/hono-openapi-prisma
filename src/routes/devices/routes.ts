@@ -4,7 +4,7 @@ import { jsonContent, jsonContentRequired } from 'stoker/openapi/helpers'
 import { createErrorSchema } from 'stoker/openapi/schemas'
 
 import { notFoundSchema } from '@/lib/constants'
-import { deviceSchema } from '@prisma/generate/schemas'
+import { deviceSchema } from '@prisma/generate/schema/mes'
 
 const tags = ['Devices']
 
