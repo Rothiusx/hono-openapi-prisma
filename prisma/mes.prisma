@@ -23,25 +23,25 @@ generator zod {
   writeNullishInModelTypes         = "false"
 }
 
-datasource db {
+datasource mes {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model batch {
-  id_batch             Int                 @id @default(autoincrement()) @db.UnsignedInt
-  id_order             Int                 @db.UnsignedInt
-  batch_key            String              @unique(map: "batch_key_UNIQUE") @db.VarChar(45)
-  batch_size           Int                 @db.UnsignedInt
-  id_wc_last           String?             @db.VarChar(16)
-  batch_wc_enter       DateTime?           @db.DateTime(0)
-  batch_product_itmref String?             @db.VarChar(90)
-  batch_product_qty    Int?                @db.UnsignedInt
-  batch_created        DateTime?           @db.DateTime(0)
-  batch_comment        String?             @db.Text
+  id_batch             Int                 @id @default(autoincrement()) @mes.UnsignedInt
+  id_order             Int                 @mes.UnsignedInt
+  batch_key            String              @unique(map: "batch_key_UNIQUE") @mes.VarChar(45)
+  batch_size           Int                 @mes.UnsignedInt
+  id_wc_last           String?             @mes.VarChar(16)
+  batch_wc_enter       DateTime?           @mes.DateTime(0)
+  batch_product_itmref String?             @mes.VarChar(90)
+  batch_product_qty    Int?                @mes.UnsignedInt
+  batch_created        DateTime?           @mes.DateTime(0)
+  batch_comment        String?             @mes.Text
   batch_state_num      Int?                @default(0)
-  batch_lot            String?             @db.VarChar(45)
+  batch_lot            String?             @mes.VarChar(45)
   work_center          work_center?        @relation(fields: [id_wc_last], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_batch_work_center_wc1")
   work_order           work_order          @relation(fields: [id_order], references: [id_order], onDelete: NoAction, onUpdate: NoAction, map: "fk_batch_work_order1")
   concession_assign    concession_assign[]
@@ -52,22 +52,22 @@ model batch {
 }
 
 model build_instruction {
-  id_bi       Int          @id @default(autoincrement()) @db.UnsignedInt
-  id_wc       String?      @db.VarChar(16)
-  bi_pn       String?      @db.VarChar(45)
-  bi_type     String       @default("B") @db.Char(1)
-  bi_text     String       @db.MediumText
+  id_bi       Int          @id @default(autoincrement()) @mes.UnsignedInt
+  id_wc       String?      @mes.VarChar(16)
+  bi_pn       String?      @mes.VarChar(45)
+  bi_type     String       @default("B") @mes.Char(1)
+  bi_text     String       @mes.MediumText
   work_center work_center? @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_build_instruction_work_center1")
 
   @@index([id_wc], map: "fk_build_instruction_id_wc_idx")
 }
 
 model concession_assign {
-  id_concession_assign Int             @id @default(autoincrement()) @db.UnsignedInt
-  id_concession        Int             @db.UnsignedInt
-  id_batch             Int             @db.UnsignedInt
-  id_user              Int             @db.UnsignedInt
-  concession_date      DateTime        @default(now()) @db.DateTime(0)
+  id_concession_assign Int             @id @default(autoincrement()) @mes.UnsignedInt
+  id_concession        Int             @mes.UnsignedInt
+  id_batch             Int             @mes.UnsignedInt
+  id_user              Int             @mes.UnsignedInt
+  concession_date      DateTime        @default(now()) @mes.DateTime(0)
   batch                batch           @relation(fields: [id_batch], references: [id_batch], onDelete: NoAction, onUpdate: NoAction, map: "fk_concession_assign_batch_batch1")
   concession_enum      concession_enum @relation(fields: [id_concession], references: [id_concession], onDelete: NoAction, onUpdate: NoAction, map: "fk_concession_assign_batch_concession_enum1")
   user_user            user_user       @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_concession_assign_batch_user_user1")
@@ -78,22 +78,22 @@ model concession_assign {
 }
 
 model concession_enum {
-  id_concession       Int                 @id @default(autoincrement()) @db.UnsignedInt
-  concession_name     String              @unique(map: "concession_name_UNIQUE") @db.VarChar(45)
-  concession_desc     String              @db.Text
-  concession_created  DateTime            @default(now()) @db.DateTime(0)
-  concession_closed   DateTime?           @db.DateTime(0)
+  id_concession       Int                 @id @default(autoincrement()) @mes.UnsignedInt
+  concession_name     String              @unique(map: "concession_name_UNIQUE") @mes.VarChar(45)
+  concession_desc     String              @mes.Text
+  concession_created  DateTime            @default(now()) @mes.DateTime(0)
+  concession_closed   DateTime?           @mes.DateTime(0)
   concession_disabled Boolean?
   concession_assign   concession_assign[]
 }
 
 model custom_field {
-  id_field              Int                     @id @default(autoincrement()) @db.UnsignedInt
-  id_wc                 String?                 @db.VarChar(16)
-  field_name            String                  @db.VarChar(45)
-  field_desc            String                  @db.VarChar(500)
-  field_datatype        String                  @default("text") @db.VarChar(10)
-  field_order           Int?                    @db.UnsignedInt
+  id_field              Int                     @id @default(autoincrement()) @mes.UnsignedInt
+  id_wc                 String?                 @mes.VarChar(16)
+  field_name            String                  @mes.VarChar(45)
+  field_desc            String                  @mes.VarChar(500)
+  field_datatype        String                  @default("text") @mes.VarChar(10)
+  field_order           Int?                    @mes.UnsignedInt
   work_center           work_center?            @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_custom_field_work_center1")
   custom_field_instance custom_field_instance[]
 
@@ -102,10 +102,10 @@ model custom_field {
 }
 
 model custom_field_instance {
-  id_field_instance Int          @id @default(autoincrement()) @db.UnsignedInt
-  id_field          Int          @db.UnsignedInt
-  id_order          Int          @db.UnsignedInt
-  field_value       String?      @db.VarChar(500)
+  id_field_instance Int          @id @default(autoincrement()) @mes.UnsignedInt
+  id_field          Int          @mes.UnsignedInt
+  id_order          Int          @mes.UnsignedInt
+  field_value       String?      @mes.VarChar(500)
   custom_field      custom_field @relation(fields: [id_field], references: [id_field], onDelete: NoAction, onUpdate: NoAction, map: "fk_custom_field_instance_custom_field1")
   work_order        work_order   @relation(fields: [id_order], references: [id_order], onDelete: NoAction, onUpdate: NoAction, map: "fk_custom_field_instance_work_order1")
 
@@ -114,21 +114,21 @@ model custom_field_instance {
 }
 
 model device {
-  id_device   Int          @id @default(autoincrement()) @db.UnsignedInt
-  id_wc       String?      @db.VarChar(16)
-  device_key  String?      @unique(map: "device_key_UNIQUE") @db.VarChar(45)
-  device_name String       @db.VarChar(60)
-  device_desc String       @db.Text
+  id_device   Int          @id @default(autoincrement()) @mes.UnsignedInt
+  id_wc       String?      @mes.VarChar(16)
+  device_key  String?      @unique(map: "device_key_UNIQUE") @mes.VarChar(45)
+  device_name String       @mes.VarChar(60)
+  device_desc String       @mes.Text
   work_center work_center? @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_device_work_center_wc1")
 
   @@index([id_wc], map: "fk_device_id_wc_idx")
 }
 
 model entry_assign {
-  id_entry_assign        Int              @id @default(autoincrement()) @db.UnsignedInt
-  id_wc                  String           @db.VarChar(16)
-  id_entry               Int              @db.UnsignedInt
-  entry_assign_order     Int?             @db.UnsignedInt
+  id_entry_assign        Int              @id @default(autoincrement()) @mes.UnsignedInt
+  id_wc                  String           @mes.VarChar(16)
+  id_entry               Int              @mes.UnsignedInt
+  entry_assign_order     Int?             @mes.UnsignedInt
   entry_assign_mandatory Boolean          @default(false)
   entry_enum             entry_enum       @relation(fields: [id_entry], references: [id_entry], onDelete: NoAction, onUpdate: NoAction, map: "fk_error_assign_error_enum1")
   work_center            work_center      @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_error_assign_work_center_wc1")
@@ -139,24 +139,24 @@ model entry_assign {
 }
 
 model entry_enum {
-  id_entry       Int            @id @default(autoincrement()) @db.UnsignedInt
-  entry_name     String         @db.VarChar(45)
-  entry_key      String?        @db.VarChar(45)
-  entry_desc     String         @db.VarChar(500)
+  id_entry       Int            @id @default(autoincrement()) @mes.UnsignedInt
+  entry_name     String         @mes.VarChar(45)
+  entry_key      String?        @mes.VarChar(45)
+  entry_desc     String         @mes.VarChar(500)
   entry_is_error Boolean        @default(false)
-  entry_datatype String         @default("text") @db.VarChar(10)
-  entry_color    String?        @db.VarChar(45)
-  entry_icon     String?        @db.VarChar(45)
+  entry_datatype String         @default("text") @mes.VarChar(10)
+  entry_color    String?        @mes.VarChar(45)
+  entry_icon     String?        @mes.VarChar(45)
   entry_assign   entry_assign[]
 }
 
 model entry_instance {
-  id_entry_inst    Int              @id @default(autoincrement()) @db.UnsignedInt
-  id_entry_assign  Int              @db.UnsignedInt
-  id_wc_stay       Int              @db.UnsignedInt
-  id_user          Int              @db.UnsignedInt
-  entry_value      String?          @db.VarChar(60)
-  entry_modified   DateTime?        @db.DateTime(0)
+  id_entry_inst    Int              @id @default(autoincrement()) @mes.UnsignedInt
+  id_entry_assign  Int              @mes.UnsignedInt
+  id_wc_stay       Int              @mes.UnsignedInt
+  id_user          Int              @mes.UnsignedInt
+  entry_value      String?          @mes.VarChar(60)
+  entry_modified   DateTime?        @mes.DateTime(0)
   entry_inactive   Boolean          @default(false)
   entry_finalized  Boolean          @default(false)
   entry_assign     entry_assign     @relation(fields: [id_entry_assign], references: [id_entry_assign], onDelete: NoAction, onUpdate: NoAction, map: "fk_entry_instance_entry_assign1")
@@ -170,11 +170,11 @@ model entry_instance {
 
 model operation {
   id_operation Int         @id @default(autoincrement())
-  id_wc        String      @db.VarChar(16)
-  id_order     Int         @db.UnsignedInt
-  oper_time    Float       @default(0) @db.Float
-  oper_name    String?     @db.VarChar(60)
-  oper_seq     Int         @db.UnsignedInt
+  id_wc        String      @mes.VarChar(16)
+  id_order     Int         @mes.UnsignedInt
+  oper_time    Float       @default(0) @mes.Float
+  oper_name    String?     @mes.VarChar(60)
+  oper_seq     Int         @mes.UnsignedInt
   work_center  work_center @relation(fields: [id_wc], references: [id_wc], onDelete: NoAction, onUpdate: NoAction, map: "fk_operation_work_center1")
   work_order   work_order  @relation(fields: [id_order], references: [id_order], onDelete: NoAction, onUpdate: NoAction, map: "fk_operation_work_order1")
 
@@ -183,9 +183,9 @@ model operation {
 }
 
 model permission_assign {
-  id_permission_assign Int             @id @default(autoincrement()) @db.UnsignedInt
-  id_role              Int             @db.UnsignedInt
-  id_permission        Int             @db.UnsignedInt
+  id_permission_assign Int             @id @default(autoincrement()) @mes.UnsignedInt
+  id_role              Int             @mes.UnsignedInt
+  id_permission        Int             @mes.UnsignedInt
   user_permission      user_permission @relation(fields: [id_permission], references: [id_permission], onDelete: NoAction, onUpdate: NoAction, map: "fk_permission_assign_user_permission1")
   user_role            user_role       @relation(fields: [id_role], references: [id_role], onDelete: NoAction, onUpdate: NoAction, map: "fk_permission_assign_user_role1")
 
@@ -194,9 +194,9 @@ model permission_assign {
 }
 
 model role_assign {
-  id_role_assign Int       @id @default(autoincrement()) @db.UnsignedInt
-  id_user        Int       @db.UnsignedInt
-  id_role        Int       @db.UnsignedInt
+  id_role_assign Int       @id @default(autoincrement()) @mes.UnsignedInt
+  id_user        Int       @mes.UnsignedInt
+  id_role        Int       @mes.UnsignedInt
   user_role      user_role @relation(fields: [id_role], references: [id_role], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_role_assign_user_role1")
   user_user      user_user @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_role_assign_user_user")
 
@@ -205,13 +205,13 @@ model role_assign {
 }
 
 model time_tracker {
-  id_time          Int              @id @default(autoincrement()) @db.UnsignedInt
-  id_wc_stay       Int              @db.UnsignedInt
-  id_user          Int?             @db.UnsignedInt
-  time_start       DateTime?        @db.DateTime(0)
-  time_stop        DateTime?        @db.DateTime(0)
-  time_interval    Int?             @db.UnsignedInt
-  time_type        Int              @default(0) @db.UnsignedInt
+  id_time          Int              @id @default(autoincrement()) @mes.UnsignedInt
+  id_wc_stay       Int              @mes.UnsignedInt
+  id_user          Int?             @mes.UnsignedInt
+  time_start       DateTime?        @mes.DateTime(0)
+  time_stop        DateTime?        @mes.DateTime(0)
+  time_interval    Int?             @mes.UnsignedInt
+  time_type        Int              @default(0) @mes.UnsignedInt
   user_user        user_user?       @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_time_tracker_user_user1")
   work_center_stay work_center_stay @relation(fields: [id_wc_stay], references: [id_wc_stay], onDelete: NoAction, onUpdate: NoAction, map: "fk_time_tracker_work_center_stay1")
 
@@ -220,30 +220,30 @@ model time_tracker {
 }
 
 model user_permission {
-  id_permission     Int                 @id @default(autoincrement()) @db.UnsignedInt
-  permission_name   String              @unique(map: "permission_name_UNIQUE") @db.VarChar(45)
-  permission_desc   String              @default("") @db.Text
+  id_permission     Int                 @id @default(autoincrement()) @mes.UnsignedInt
+  permission_name   String              @unique(map: "permission_name_UNIQUE") @mes.VarChar(45)
+  permission_desc   String              @default("") @mes.Text
   permission_assign permission_assign[]
 }
 
 model user_role {
-  id_role           Int                 @id @default(autoincrement()) @db.UnsignedInt
-  role_name         String              @unique(map: "role_name_UNIQUE") @db.VarChar(45)
-  role_desc         String              @db.Text
+  id_role           Int                 @id @default(autoincrement()) @mes.UnsignedInt
+  role_name         String              @unique(map: "role_name_UNIQUE") @mes.VarChar(45)
+  role_desc         String              @mes.Text
   permission_assign permission_assign[]
   role_assign       role_assign[]
 }
 
 model user_user {
-  id_user           Int                 @id @default(autoincrement()) @db.UnsignedInt
-  user_firstname    String              @db.VarChar(60)
-  user_lastname     String              @db.VarChar(100)
-  user_login        String?             @unique(map: "user_login_UNIQUE") @db.VarChar(60)
+  id_user           Int                 @id @default(autoincrement()) @mes.UnsignedInt
+  user_firstname    String              @mes.VarChar(60)
+  user_lastname     String              @mes.VarChar(100)
+  user_login        String?             @unique(map: "user_login_UNIQUE") @mes.VarChar(60)
   user_ldap         Boolean             @default(false)
-  user_pass         String?             @db.VarChar(64)
-  user_operator     String?             @unique(map: "user_operator_UNIQUE") @db.VarChar(45)
+  user_pass         String?             @mes.VarChar(64)
+  user_operator     String?             @unique(map: "user_operator_UNIQUE") @mes.VarChar(45)
   user_inactive     Boolean             @default(false)
-  user_token        String?             @db.VarChar(500)
+  user_token        String?             @mes.VarChar(500)
   concession_assign concession_assign[]
   entry_instance    entry_instance[]
   role_assign       role_assign[]
@@ -252,10 +252,10 @@ model user_user {
 }
 
 model work_center {
-  id_wc             String              @id @unique(map: "wc_key_UNIQUE") @db.VarChar(16)
-  wc_desc           String              @db.Text
-  wc_week_hours     Float               @default(0) @db.Float
-  wc_idle_timeout   Int                 @default(0) @db.UnsignedInt
+  id_wc             String              @id @unique(map: "wc_key_UNIQUE") @mes.VarChar(16)
+  wc_desc           String              @mes.Text
+  wc_week_hours     Float               @default(0) @mes.Float
+  wc_idle_timeout   Int                 @default(0) @mes.UnsignedInt
   batch             batch[]
   build_instruction build_instruction[]
   custom_field      custom_field[]
@@ -267,13 +267,13 @@ model work_center {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model work_center_stay {
-  id_wc_stay              Int              @id @default(autoincrement()) @db.UnsignedInt
-  id_wc                   String           @db.VarChar(16)
-  id_batch                Int              @db.UnsignedInt
-  id_user                 Int?             @db.UnsignedInt
-  wc_start_date           DateTime         @default(now()) @db.DateTime(0)
-  wc_end_date             DateTime?        @db.DateTime(0)
-  wc_stay_order           Int              @default(1) @db.UnsignedInt
+  id_wc_stay              Int              @id @default(autoincrement()) @mes.UnsignedInt
+  id_wc                   String           @mes.VarChar(16)
+  id_batch                Int              @mes.UnsignedInt
+  id_user                 Int?             @mes.UnsignedInt
+  wc_start_date           DateTime         @default(now()) @mes.DateTime(0)
+  wc_end_date             DateTime?        @mes.DateTime(0)
+  wc_stay_order           Int              @default(1) @mes.UnsignedInt
   wc_stay_last_stay_on_wc Boolean?         @default(false)
   wc_stay_finish_qty      Int              @default(0)
   entry_instance          entry_instance[]
@@ -288,20 +288,20 @@ model work_center_stay {
 }
 
 model work_order {
-  id_order              Int                     @id @default(autoincrement()) @db.UnsignedInt
-  wo_number             String                  @unique(map: "wo_number_UNIQUE") @db.VarChar(45)
-  wo_startdate          String?                 @db.VarChar(100)
-  wo_enddate            String?                 @db.VarChar(100)
-  wo_product            String?                 @db.VarChar(90)
+  id_order              Int                     @id @default(autoincrement()) @mes.UnsignedInt
+  wo_number             String                  @unique(map: "wo_number_UNIQUE") @mes.VarChar(45)
+  wo_startdate          String?                 @mes.VarChar(100)
+  wo_enddate            String?                 @mes.VarChar(100)
+  wo_product            String?                 @mes.VarChar(90)
   wo_quantity           Int?
   wo_status             Int?
-  wo_x3_last_update     DateTime?               @db.DateTime(0)
-  wo_comment            String?                 @db.Text
-  wo_note_short         String?                 @db.VarChar(260)
-  wo_note_long          String?                 @db.Text
+  wo_x3_last_update     DateTime?               @mes.DateTime(0)
+  wo_comment            String?                 @mes.Text
+  wo_note_short         String?                 @mes.VarChar(260)
+  wo_note_long          String?                 @mes.Text
   wo_hold               Boolean                 @default(false)
   wo_keep_ope_seq       Boolean                 @default(false)
-  wo_customer           String?                 @db.VarChar(100)
+  wo_customer           String?                 @mes.VarChar(100)
   batch                 batch[]
   custom_field_instance custom_field_instance[]
   operation             operation[]
