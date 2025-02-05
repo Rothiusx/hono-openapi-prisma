@@ -10,7 +10,7 @@ import type { device } from '@prisma/generate/schema/mes'
 import createApp from '@/app/create-app'
 import env from '@/env'
 import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from '@/lib/constants'
-import router from '@/routes/devices'
+import { router } from '@/routes/devices'
 
 if (env.NODE_ENV !== 'test') {
   throw new Error('NODE_ENV must be \'test\'')
@@ -34,6 +34,7 @@ describe('devices routes', () => {
         id_device: device.id_device,
       },
     })
+
     expect(response.status).toBe(HttpStatusCodes.UNPROCESSABLE_ENTITY)
     if (response.status === HttpStatusCodes.UNPROCESSABLE_ENTITY) {
       const json = await response.json()

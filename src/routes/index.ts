@@ -6,23 +6,26 @@ import { createMessageObjectSchema } from 'stoker/openapi/schemas'
 import { createRouter } from '@/app/create-app'
 
 const router = createRouter()
-  .openapi(
-    createRoute({
-      tags: ['Index'],
-      method: 'get',
-      path: '/',
-      responses: {
-        [HttpStatusCodes.OK]: jsonContent(
-          createMessageObjectSchema('Devices API'),
-          'Devices API Index',
-        ),
-      },
-    }),
-    (c) => {
-      return c.json({
-        message: 'Devices API',
-      }, HttpStatusCodes.OK)
+
+router.openapi(
+  createRoute({
+    tags: ['Index'],
+
+    method: 'get',
+    path: '/',
+    responses: {
+      [HttpStatusCodes.OK]: jsonContent(
+        createMessageObjectSchema('Devices API'),
+        'API Index',
+      ),
     },
-  )
+  }),
+  (c) => {
+    return c.json({
+      message: 'API',
+    }, HttpStatusCodes.OK)
+  },
+
+)
 
 export default router
